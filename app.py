@@ -201,8 +201,13 @@ def parse_netscape_cookies(cookie_file_content):
     for line in cookie_file_content.splitlines():
         line = line.strip()
 
-        # Skip comments and empty lines
-        if not line or line.startswith('#'):
+        if not line:
+            continue
+
+        if line.startswith('#HttpOnly_'):
+            line = line[len('#HttpOnly_'):]
+        elif line.startswith('#'):
+            # Skip comments
             continue
 
         # Parse tab-separated values
